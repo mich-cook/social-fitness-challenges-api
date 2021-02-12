@@ -19,6 +19,8 @@ module.exports = gql`
 
   type Mutation {
     newChallenge(start: String!, end: String!, cutoff: String!, metrics: String!): Challenge!
+    updateChallenge(id: ID!, start: String!): Challenge!
+    deleteChallenge(id: ID!): Boolean!
   }
 
 `;
