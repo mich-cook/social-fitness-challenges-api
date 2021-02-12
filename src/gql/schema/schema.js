@@ -2,6 +2,8 @@ const { gql } = require("apollo-server-express");
 
 module.exports = gql`
 
+  scalar DateTime
+
   type Challenge {
     id: ID!
     teams: Boolean
@@ -11,6 +13,8 @@ module.exports = gql`
     end: String!
     metrics: String!
     deleted: Boolean
+    createdAt: DateTime!
+    updatedAt: DateTime!
   }
 
   type Query {
