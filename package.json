@@ -1,0 +1,31 @@
+{
+  "name": "socially-challenged-api",
+  "version": "1.0.0",
+  "description": "local version of API until we cloud it",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mich-cook/socially-challenged.git"
+  },
+  "keywords": [
+    "express",
+    "graphql",
+    "apollo",
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "mich-cook",
+  "bugs": {
+    "url": "https://github.com/mich-cook/socially-challenged/issues"
+  },
+  "homepage": "https://github.com/mich-cook/socially-challenged#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  }
+}
