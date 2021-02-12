@@ -10,6 +10,7 @@ module.exports = gql`
     cutoff: String!
     end: String!
     metrics: String!
+    deleted: Boolean
   }
 
   type Query {
