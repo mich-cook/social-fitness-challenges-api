@@ -3,15 +3,18 @@ const { ApolloServer } = require("apollo-server-express");
 
 require("dotenv").config();
 
+// database setup
 const db = require("./db/mongodb.js");
 const models = require("./db/models/challenge.js");
+const DB_HOST = process.env.MONGO_WRITER_URI;
 
+// graphql setup
 const typeDefs = require("./gql/schema/schema.js");
 const resolvers = require("./gql/resolvers/index.js");
 
+// app setup
 const app = express();
 const PORT = process.env.PORT || 3030;
-const DB_HOST = process.env.MONGO_WRITER_URI;
 
 db.connect(DB_HOST);
 
