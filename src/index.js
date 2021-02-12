@@ -20,7 +20,7 @@ db.connect(DB_HOST);
 
 app.get("/", (req, res) => res.send(`Hello World!`));
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({ typeDefs, resolvers, context: () => { return { models }; } });
 server.applyMiddleware({ app, "path": "/api" });
 
 app.listen(PORT, () => console.log(`GraphQL listening on port ${PORT}!`));
