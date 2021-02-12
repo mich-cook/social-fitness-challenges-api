@@ -7,8 +7,12 @@ let challenges = [
 
 module.exports = {
   "Query": {
-    "challenges": () => challenges,
-    "challenge": (parent, args) => { return challenges.find(challenge => args.id === challenge.id); }
+    "challenges": async (parent, args, { models }) => {
+      return await models.Challenge.find();
+    },
+    "challenge": async (parent, args, { models }) => {
+      return await models.Challenge.findById(args.id);
+    }
   },
   "Mutation": {
     "newChallenge": (parent, args) => {
