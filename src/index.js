@@ -5,7 +5,7 @@ require("dotenv").config();
 
 // database setup
 const db = require("./db/mongodb.js");
-const models = require("./db/models/challenge.js");
+const models = require("./db/models/index.js");
 const DB_HOST = process.env.MONGO_WRITER_URI;
 
 // graphql setup
