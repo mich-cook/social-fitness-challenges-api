@@ -6,5 +6,12 @@ module.exports = {
   },
   "challenge": async (parent, args, { models }) => {
     return await models.Challenge.findById(args.id);
+  },
+
+  "users": async (parent, args, { models }) => {
+    return await models.User.find();
+  },
+  "user": async (parent, args, { models }) => {
+    return await models.User.FindById(args.id);
   }
 };
