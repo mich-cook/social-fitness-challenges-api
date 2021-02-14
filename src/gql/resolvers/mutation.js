@@ -71,6 +71,38 @@ module.exports = {
     }
   },
 
+  "joinChallenge": async (parent, { id }, { models, user }) => {
+    if (user === undefined) {
+      throw new AuthenticationError(`User must be authenticated to join or leave a challenge.`);
+    }
+
+    const challenge = await models.Challenge.findById(id);
+    if (challenge.participants.indexOf(user.id) >= 0) {
+      return challenge;
+    }
+
+    return await models.Challenge.findByIdAndUpdate(id, {
+      "$push": { "participants": mongoose.Types.ObjectId(user.id) },
+      "$inc": { "participantCount": 1 }
+    }, { "new": true });
+  },
+
+  "leaveChallenge": async (parent, { id }, { models, user }) => {
+    if (user === undefined) {
+      throw new AuthenticationError(`User must be authenticated to join or leave a challenge.`);
+    }
+
+    const challenge = await models.Challenge.findById(id);
+    if (challenge.participants.indexOf(user.id) === -1) {
+      return challenge;
+    }
+
+    return await models.Challenge.findByIdAndUpdate(id, {
+      "$pull": { "participants": mongoose.Types.ObjectId(user.id) },
+      "$inc": { "participantCount": -1 }
+    }, { "new": true });
+  },
+
   // (username: String!, displayName: String!, email: String!, password: String!): String!
   "registerUser": async (parent, args, { models }) => {
     let { username, email, password, displayName } = args;
