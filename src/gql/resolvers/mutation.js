@@ -1,5 +1,6 @@
 // mutate data and return the result
 
+const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { AuthenticationError, ForbiddenError } = require("apollo-server-express");
@@ -7,12 +8,17 @@ const { AuthenticationError, ForbiddenError } = require("apollo-server-express")
 require("dotenv").config();
 
 module.exports = {
-  "newChallenge": async (parent, args, { models }) => {
+  "newChallenge": async (parent, args, { models, user }) => {
+    // TODO: add challenge pointer to User as well, right?
+    if (user === undefined) {
+      throw new AuthenticationError(`User must be authenticated to create a challenge.`);
+    }
     return await models.Challenge.create({
       "start": args.start,
       "cutoff": args.cutoff,
       "end": args.end,
-      "metrics": args.metrics
+      "metrics": args.metrics,
+      "owner": mongoose.Types.ObjectId(user.id)
     });
   },
 

@@ -28,6 +28,11 @@ const challengeSchema = new mongoose.Schema({
   "deleted": {
     "type": Boolean,
     "required": false
+  },
+  "owner": {
+    "type": mongoose.Schema.Types.ObjectId,
+    "ref": "User",
+    "required": true
   }
 }, {
   "timestamps": true  /* createdAt and updatedAt */
