@@ -1,4 +1,5 @@
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const { ApolloServer } = require("apollo-server-express");
 
 require("dotenv").config();
@@ -16,11 +17,34 @@ const resolvers = require("./gql/resolvers/index.js");
 const app = express();
 const PORT = process.env.PORT || 3030;
 
+// get user info from jwt
+const getUser = token => {
+  if (token === undefined) {
+    return;
+  }
+  try {
+    return jwt.verify(token, process.env.JWT_SECRET);
+  } catch(e) {
+    // if token doesn't verify, we get INTERNAL_SERVER_ERROR
+    // "Context creation failed: Invalid session."
+    // this may not be the way we want to handle an invalid token
+    throw new Error(`Invalid session.`);
+  }
+};
+
 db.connect(DB_HOST);
 
 app.get("/", (req, res) => res.send(`Hello World!`));
 
-const server = new ApolloServer({ typeDefs, resolvers, context: () => { return { models }; } });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req }) => {
+    const token = req.headers.authorization;
+    const user = getUser(token);
+    return { models, user };
+  }
+});
 server.applyMiddleware({ app, "path": "/api" });
 
 app.listen(PORT, () => console.log(`GraphQL listening on port ${PORT}!`));
