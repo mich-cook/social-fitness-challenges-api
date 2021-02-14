@@ -12,6 +12,7 @@ module.exports = {
     return await models.User.find();
   },
   "user": async (parent, args, { models }) => {
-    return await models.User.FindById(args.id);
+    // TODO: support username and email lookup as well
+    return await models.User.findById(args.id);
   }
 };
