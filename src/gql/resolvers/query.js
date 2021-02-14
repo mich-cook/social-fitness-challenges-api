@@ -9,10 +9,11 @@ module.exports = {
   },
 
   "users": async (parent, args, { models }) => {
-    return await models.User.find();
+    return await models.User.find({});
   },
   "user": async (parent, args, { models }) => {
     // TODO: support username and email lookup as well
+    // eg:  let { username } = args.username; -> .findOne({ username });
     return await models.User.findById(args.id);
   }
 };
