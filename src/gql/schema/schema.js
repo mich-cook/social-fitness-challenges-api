@@ -32,6 +32,7 @@ module.exports = gql`
     challenge(id: ID!): Challenge!
     users: [ User! ]!
     user(id: ID!): User!
+    me: User!
   }
 
   type Mutation {

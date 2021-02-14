@@ -8,6 +8,9 @@ module.exports = {
     return await models.Challenge.findById(args.id);
   },
 
+  "me": async (parent, args, { models, user }) => {
+    return await models.User.findById(user.id);
+  },
   "users": async (parent, args, { models }) => {
     return await models.User.find({});
   },
