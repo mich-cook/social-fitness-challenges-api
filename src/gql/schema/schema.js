@@ -16,6 +16,8 @@ module.exports = gql`
     deleted: Boolean
     createdAt: DateTime!
     updatedAt: DateTime!
+    participants: [ User! ]
+    participantCount: Int!
   }
 
   type User {
