@@ -23,7 +23,20 @@ module.exports = {
   },
 
   /* just updating the start date for now, but we'll get back to the rest */
-  "updateChallenge": async (parent, args, { models }) => {
+  "updateChallenge": async (parent, args, { models, user }) => {
+    if (user === undefined) {
+      throw new AuthenticationError(`User must be authenticated to modify a challenge.`);
+    }
+
+    const challenge = await models.Challenge.findById(args.id);
+    if (challenge === undefined) {
+      throw new Error(`Challenge to be modified was not found.`);
+    }
+
+    if (String(challenge.owner) !== user.id) {
+      throw new ForbiddenError(`User is not allowed to modify this challenge.`);
+    }
+
     return await models.Challenge.findOneAndUpdate(
       { "_id": args.id },
       { "$set": { "start": args.start }},
@@ -31,7 +44,20 @@ module.exports = {
     );
   },
 
-  "deleteChallenge": async (parent, args, { models }) => {
+  "deleteChallenge": async (parent, args, { models, user }) => {
+    if (user === undefined) {
+      throw new AuthenticationError(`User must be authenticated to modify a challenge.`);
+    }
+
+    const challenge = await models.Challenge.findById(args.id);
+    if (challenge === undefined) {
+      throw new Error(`Challenge to be modified was not found.`);
+    }
+
+    if (String(challenge.owner) !== user.id) {
+      throw new ForbiddenError(`User is not allowed to modify this challenge.`);
+    }
+
     try {
       await models.Challenge.findOneAndUpdate(
         { "_id": args.id },
