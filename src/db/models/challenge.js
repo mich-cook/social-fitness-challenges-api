@@ -33,7 +33,17 @@ const challengeSchema = new mongoose.Schema({
     "type": mongoose.Schema.Types.ObjectId,
     "ref": "User",
     "required": true
-  }
+  },
+  "participantCount": {
+    "type": Number,
+    "default": 0,
+    "required": false
+  },
+  "participants": [{
+    "type": mongoose.Schema.Types.ObjectId,
+    "ref": "User",
+    "required": false
+  }]
 }, {
   "timestamps": true  /* createdAt and updatedAt */
 });
