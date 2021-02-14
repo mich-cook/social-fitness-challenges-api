@@ -43,6 +43,8 @@ module.exports = gql`
     deleteChallenge(id: ID!): Boolean!
     registerUser(username: String!, displayName: String!, email: String!, password: String!): String!
     authenticateUser(username: String, email: String, password: String!): String!
+    joinChallenge(id: ID!): Challenge!
+    leaveChallenge(id: ID!): Challenge!
   }
 
 `;
