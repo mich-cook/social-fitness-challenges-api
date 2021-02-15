@@ -7,6 +7,33 @@ module.exports = {
   "challenge": async (parent, args, { models }) => {
     return await models.Challenge.findById(args.id);
   },
+  "challengeList": async (parent, { cursor }, { models }) => {
+    const pageSize = 10;
+    let continued = false;
+
+    let defaultCursor = {};
+
+    if (cursor !== undefined) {
+      defaultCursor = { "_id": { "$lt": cursor }};
+    }
+
+    let challenges = await models.Challenge.find(defaultCursor)
+      .sort({ "_id": -1 })
+      .limit(pageSize + 1);
+
+    if (challenges.length > pageSize) {
+      continued = true;
+      challenges = challenges.slice(0, -1);
+    /*
+    TODO: handle erroneous request if cursor is last id
+    } else if (challenges.length === 0) {
+      challenges = [];
+      */
+    }
+
+    const newCursor = challenges[challenges.length - 1]._id;
+    return { challenges, "cursor": newCursor, continued };
+  },
 
   "me": async (parent, args, { models, user }) => {
     return await models.User.findById(user.id);

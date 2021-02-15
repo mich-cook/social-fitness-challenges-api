@@ -20,6 +20,12 @@ module.exports = gql`
     participantCount: Int!
   }
 
+  type ChallengeList {
+    challenges: [ Challenge ]!
+    cursor: String!
+    continued: Boolean!
+  }
+
   type User {
     id: ID!
     displayName: String!
@@ -36,6 +42,7 @@ module.exports = gql`
     users: [ User! ]!
     user(id: ID!): User!
     me: User!
+    challengeList(cursor: String): ChallengeList
   }
 
   type Mutation {
