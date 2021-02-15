@@ -25,7 +25,8 @@ module.exports = gql`
     displayName: String!
     username: String!
     email: String
-    challenges: [ String ]
+    challengesOwned: [ Challenge! ]!
+    challengesParticipating: [ Challenge! ]!
     groups: [ String ]
   }
 
