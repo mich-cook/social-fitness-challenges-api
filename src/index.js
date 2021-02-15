@@ -18,7 +18,8 @@ const resolvers = require("./gql/resolvers/index.js");
 // app setup
 const PORT = process.env.PORT || 3030;
 const app = express();
-app.use(helmet());  // default config for common security practices
+// TODO: configure helmet so it can be used with gql playground
+// app.use(helmet());  // default config for common security practices
 app.use(cors());  // currently wide open, but we'll update for production
 
 
