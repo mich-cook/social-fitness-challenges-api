@@ -1,4 +1,5 @@
 const express = require("express");
+const helmet = require("helmet");
 const jwt = require("jsonwebtoken");
 const { ApolloServer } = require("apollo-server-express");
 
@@ -14,8 +15,10 @@ const typeDefs = require("./gql/schema/schema.js");
 const resolvers = require("./gql/resolvers/index.js");
 
 // app setup
-const app = express();
 const PORT = process.env.PORT || 3030;
+const app = express();
+app.use(helmet());  // default config for common security practices
+
 
 // get user info from jwt
 const getUser = token => {
