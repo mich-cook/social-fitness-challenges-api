@@ -2,7 +2,7 @@
 
 module.exports = {
   "challenges": async (parent, args, { models }) => {
-    return await models.Challenge.find();
+    return await models.Challenge.find().limit(100);
   },
   "challenge": async (parent, args, { models }) => {
     return await models.Challenge.findById(args.id);
@@ -39,7 +39,7 @@ module.exports = {
     return await models.User.findById(user.id);
   },
   "users": async (parent, args, { models }) => {
-    return await models.User.find({});
+    return await models.User.find({}).limit(100);
   },
   "user": async (parent, args, { models }) => {
     // TODO: support username and email lookup as well
