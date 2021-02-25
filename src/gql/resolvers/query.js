@@ -13,7 +13,7 @@ module.exports = {
 
     let defaultCursor = {};
 
-    if (cursor !== undefined) {
+    if ((cursor !== "") && (cursor !== undefined)) {
       defaultCursor = { "_id": { "$lt": cursor }};
     }
 
