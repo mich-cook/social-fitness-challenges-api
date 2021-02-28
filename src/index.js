@@ -27,7 +27,8 @@ app.use(cors());  // currently wide open, but we'll update for production
 
 // get user info from jwt
 const getUser = token => {
-  if (token === undefined) {
+  // empty tokens will return undefined
+  if ((token === undefined) || (token === "")) {
     return;
   }
   try {
